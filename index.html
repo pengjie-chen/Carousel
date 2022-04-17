@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="utf-8">
+  <title>咪咕音乐轮播图</title>
+  <style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    #swiper{
+
+      position: relative;
+    }
+    .swiper{
+      width: 1400px;
+      height: 380px;
+
+      margin: 0 auto;
+      position: relative;
+    }
+    .swiperItem{
+      width: 1400px;
+      height: 350px;
+      position: absolute;
+      transition: 1s;
+      box-shadow: rgb(0, 0, 15);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .swiperItem>img{
+      width: 1400px;
+      height: 350px;
+      display: block;
+    }
+    /* 隐藏状态 */
+    .def{
+      opacity: 0;
+      z-index: -1;
+      transform: perspective(500px) translateZ(-250px);
+
+    }
+    .c{
+      opacity: 1;
+      z-index: 1;
+      transform: perspective(500px) translateZ(-230px) translateX(230px);
+    }
+    .a{
+      opacity: 1;
+      z-index: 1;
+      transform: perspective(500px) translateZ(-230px) translateX(-230px);
+    }
+    .b{
+      opacity: 1;
+      z-index: 2;
+      transform: perspective(500px) translateZ(-130px) translateX(0px);
+    }
+    .btn{
+      position: absolute;
+      width: 50px;
+      height: 100px;
+      top: 40%;
+    }
+    .btn_left{
+      width: 32px;
+      height: 32px;
+      left: 0;
+      background-image: url(./img/left.png);
+    }
+    .btn_right{
+      width: 32px;
+      height: 32px;
+      right: 0;
+      background-image: url(./img/right.png);
+    }
+    .btn_left:hover{
+      background-image: url(./img/left_hover.png);
+    }
+    .btn_right:hover{
+      background-image: url(./img/right_hover.png);
+    }
+    .points{
+      width: 200px;
+      height: 4;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-around;
+    }
+    .points a{
+      width: 15px;
+      height: 4px;
+      background-color: rgb(163, 163, 163);
+      border-radius: 2px;
+    }
+    .points .show{
+      background-color: powderblue;
+    }
+    .points .hidden{
+      background-color: rgb(163, 163, 163);
+    }
+  </style>
+</head>
+<body>
+  <div id = "swiper">
+    <div class = "swiper">
+      <div class="swiperItem b">
+        <a href="https://music.migu.cn/v3/music/song/6005752X8D6">
+          <img src="./img/1.jpeg" alt="" class="src">
+        </a>
+      </div>
+      <div class="swiperItem c">
+        <a href="https://music.migu.cn/v3/music/song/6005752X8D6">
+          <img src="./img/2.jpeg" alt="" class="src">
+        </a>
+      </div>
+      <div class="swiperItem def">
+        <a href="https://music.migu.cn/v3/music/song/6005752X8D6">
+          <img src="./img/3.jpeg" alt="" class="src">
+        </a>
+      </div>
+      <div class="swiperItem def">
+        <a href="https://music.migu.cn/v3/music/song/6005752X8D6">
+          <img src="./img/4.jpeg" alt="" class="src">
+        </a>
+      </div>
+      <div class="swiperItem def">
+        <a href="https://music.migu.cn/v3/music/song/6005752X8D6">
+          <img src="./img/5.jpeg" alt="" class="src">
+        </a>
+      </div>
+      <div class="swiperItem def">
+        <a href="https://music.migu.cn/v3/music/song/6005752X8D6">
+          <img src="./img/6.jpeg" alt="" class="src">
+        </a>
+      </div>
+      <div class="swiperItem a">
+        <a href="https://music.migu.cn/v3/music/song/6005752X8D6">
+          <img src="./img/7.jpeg" alt="" class="src">
+        </a>
+      </div>
+
+    </div>
+    <a href="#" class="btn btn_left"></a>
+    <a href="#" class="btn btn_right"></a>
+    <div class="points">
+      <a href="#" class="show"></a>
+      <a href="#" class="hidden"></a>
+      <a href="#" class="hidden"></a>
+      <a href="#" class="hidden"></a>
+      <a href="#" class="hidden"></a>
+      <a href="#" class="hidden"></a>
+      <a href="#" class="hidden"></a>
+    </div>
+  </div>
+
+  <script>
+    var swiper = document.getElementById("swiper")
+    var swiperItem = document.getElementsByClassName("swiperItem")
+    var points = document.querySelectorAll(".points a")
+    var btn_left = document.querySelector(".btn_left")
+    var btn_right = document.querySelector(".btn_right")
+    var nowIndex = 0
+    var timer
+
+    swiperPlay()
+    function swiperPlay(){
+      timer = setInterval(() => {
+        nowIndex++
+        if (nowIndex===swiperItem.length) {
+          nowIndex = 0
+        }
+        changeAll()
+      }, 1500);
+    }
+
+    function changeAll(){
+      changeImg()
+      changePoint()
+    }
+
+    function changeImg(){
+      for(var i=0; i<swiperItem.length; i++){
+        swiperItem[i].className = "swiperItem def"
+      }
+        if(nowIndex === 0){
+          swiperItem[nowIndex].className = "swiperItem b"
+          swiperItem[swiperItem.length-1].className = "swiperItem a"
+          swiperItem[nowIndex+1].className = "swiperItem c"
+        }else if(nowIndex===swiperItem.length-1){
+          swiperItem[nowIndex].className = "swiperItem b"
+          swiperItem[nowIndex-1].className = "swiperItem a"
+          swiperItem[0].className = "swiperItem c"
+        }else{
+          swiperItem[nowIndex].className = "swiperItem b"
+          swiperItem[nowIndex-1].className = "swiperItem a"
+          swiperItem[nowIndex+1].className = "swiperItem c"
+        }
+    }
+
+    swiper.onmouseover=function(){
+      clearInterval(timer)
+    }
+    swiper.onmouseout=function(){
+      swiperPlay()
+    }
+
+    function changePoint(){
+      for(var i = 0;i<points.length;i++){
+        points[i].className = "hidden"
+      }
+      points[nowIndex].className = "show"
+    }
+
+    for(var i=0;i<points.length;i++){
+      points[i].index = i
+      points[i].onclick=function(){
+        nowIndex = this.index
+        changeAll()
+      }
+    }
+
+    btn_left.onclick=function(){
+      nowIndex--
+      if(nowIndex<0){
+        nowIndex=swiperItem.length-1
+      }
+      changeAll()
+    }
+    btn_right.onclick=function(){
+      nowIndex++
+      if(nowIndex>swiperItem.length-1){
+        nowIndex=0
+      }
+      changeAll()
+    }
+
+  </script>
+</body>
+</html>
